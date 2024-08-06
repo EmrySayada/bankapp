@@ -2,32 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+
+:root{
+    --main-color: #3399CC;
+    --sec-color: white;
+    --accent-color: #E8F8FF;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+
+.form{
+    background-color: #EEEEEE;
+    height: 50px;
+    width: 250px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.btn{
+    background-color: var(--main-color);
+    width: 200px;
+    height: 50px;
+    border-radius: 15px;
+    color: var(--sec-color);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.btn:hover{
+    width: 220px;
+}
+
+.card{
+    background: var(--accent-color);
+    height: 90%;
+    width: 20%;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    /* border: black 2px solid; */
+}
+
+.txt{
+    font-size: 32px;
+    color: var(--main-color);
+}
+
+.smallTxt{
+    font-size: 16px;
+    color: var(--main-color);
 }
