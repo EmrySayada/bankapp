@@ -29,7 +29,7 @@ function Accounts() {
               )
             })}
           </section>
-          <button className='btn transition-all' onClick={async () => {await createAccount(cookie.token)}}>Create Account</button>
+          <button className='btn transition-all' onClick={async () => {await createAccount(cookie.token); window.location.reload()}}>Create Account</button>
         </div>
     </div>
   )
