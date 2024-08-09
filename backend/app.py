@@ -91,15 +91,28 @@ def create_app():
         current_user = get_jwt_identity()
         transId = request.args.get('transactionId')
         transaction = Transaction.query.get(transId)
-        if check_account_ownership(current_user, transaction.receiver_account_id):
+        if check_account_ownership(current_user, transaction.receiver_account_id) and transaction.status == "0":
             sender_account = Account.query.get(transaction.sender_account_id)
             receiver_account = Account.query.get(transaction.receiver_account_id)
             sender_account.balance -= float(transaction.amount)
             receiver_account.balance += float(transaction.amount)
-            transaction.set_status()
+            transaction.set_status("Accepted")
             db.session.commit()
             return jsonify({"message": "Transaction Accepted"}), 200
         return jsonify({"error": "You might not own the account"}), 400
+    
+    @app.route('/reject_transaction', methods=["GET"])
+    @jwt_required()
+    def reject_transaction():
+        current_user = get_jwt_identity()
+        transId = request.args.get('transactionId')
+        transaction = Transaction.query.get(transId)
+        if check_account_ownership(current_user, transaction.receiver_account_id) and transaction.status == "0":
+            transaction.set_status("Rejected")
+            db.session.commit()
+            return jsonify({"message": "Transaction Rejected"}), 200
+        return jsonify({"error": "You might not own the account"}), 400
+
 
     @app.route('/transactions', methods=["GET"])
     @jwt_required()
@@ -136,12 +149,12 @@ def create_app():
         if not user:
             return jsonify({"error": "user not found"}), 400
         if notif_type == 'received':
-            for notif in user.received_notification:
+            for notif in user.received_notifications:
                 notifications.append(notif.serialize())
         else:
-            for notif in user.sent_notification:
+            for notif in user.sent_notifications:
                 notifications.append(notif.serialize())
-            for notif in user.received_notification:
+            for notif in user.received_notifications:
                 notifications.append(notif.serialize())
         return jsonify({"notifications": notifications}), 200
     

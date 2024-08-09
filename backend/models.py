@@ -78,12 +78,12 @@ class Transaction(db.Model):
     amount = db.Column(db.Float, nullable=False)
     description = db.Column(db.String(200), nullable=True)
     timestamp = db.Column(db.DateTime, server_default=db.func.now())
-    status = db.Column(db.Boolean, nullable=False)
+    status = db.Column(db.String(80), nullable=False, server_default='Pending')
     # sender = db.relationship('User', foreign_keys=[sender_id], backref='sent_transactions')
     # receiver = db.relationship('User', foreign_keys=[receiver_id], backref='received_transactions')
 
-    def set_status(self):
-        self.status = True
+    def set_status(self, state):
+        self.status = state
 
     def serialize(self):
         return {
@@ -112,6 +112,7 @@ class Notification(db.Model):
 
     def serialize(self):
         return {
+            "id": self.id,
             "title": self.title,
             "description": self.description,
             "read": self.read,

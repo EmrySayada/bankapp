@@ -4,49 +4,48 @@ import { useCookies } from "react-cookie";
 import { getInfo } from "@/api/apiManager";
 import NavBar from "@/components/nav";
 import { dater } from "@/functions/dater";
+import TransactionTable from "@/components/transactionTable";
 
 
 export default function Home() {
   const [cookie, setCookie, removeCookie] = useCookies(['token']);
   const [balance, setBalance] = useState();
   const [transaction, setTransaction] = useState();
-  const [transactions, setTransactions] = useState([]);
   const [accounts, setAccounts] = useState();
   const [numOfTransa, setNumOfTransa] = useState();
   const router = useRouter();
 
   useEffect(() => {
     if(!cookie.token || cookie.token === "undefined"){
-      router.replace('/login')
+      router.replace('/login');
     }else{
       async function orderData(){
         const tempData = await getInfo(cookie.token);
         console.log(tempData)
         if (tempData == undefined || tempData.statusCode === 401){
-          router.replace('/login')
+          router.replace('/login');
         }else{
           if(tempData.transactionsData.transactions !== undefined){
             if (tempData.transactionsData.transactions.length){
-              setTransaction(tempData.transactionsData.transactions[tempData.transactionsData.transactions.length-1].amount)
-              setTransactions(tempData.transactionsData.transactions)
+              setTransaction(tempData.transactionsData.transactions[tempData.transactionsData.transactions.length-1].amount);
             }else{
-              setTransaction(0)
+              setTransaction(0);
             }
-            setAccounts(tempData.accountData.accounts.length)
-            setNumOfTransa(tempData.transactionsData.transactions.length)
+            setAccounts(tempData.accountData.accounts.length);
+            setNumOfTransa(tempData.transactionsData.transactions.length);
             var sum = 0;
             for (let i = 0; i<tempData.accountData.accounts.length; i++){
-              sum = sum + tempData.accountData.accounts[i].balance
+              sum = sum + tempData.accountData.accounts[i].balance;
             }
           }
 
-          setBalance(sum)
+          setBalance(sum);
         }
         if(tempData === undefined){
-          router.replace('/login')
+          router.replace('/login');
         }
       }
-      orderData()
+      orderData();
     }
   }, [])
   return (
@@ -61,34 +60,7 @@ export default function Home() {
         </section>
         <section className="w-[100%] h-[60vh] flex flex-col items-center mt-[5vh]">
             <h1 className="txt font-semibold">Transactions</h1>
-            <table className="bg-[#E8F8FF] w-[90%] mt-[5vh] rounded-[5px]">
-              <thead className="h-[50px]">
-                <tr>
-                  <th className="smallTxt">#</th>
-                  <th className="smallTxt">From</th>
-                  <th className="smallTxt">To</th>
-                  <th className="smallTxt">Amount</th>
-                  <th className="smallTxt">Description</th>
-                  <th className="smallTxt">Time Stamp</th>
-                  <th className="smallTxt">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transactions.map((tr, index) => {
-                  return (
-                  <tr key={index} className="h-[50px] border-y-[1px] border-gray-300 hover:bg-white transition-all">
-                    <th className="smallTxt font-normal">{tr.id}</th>
-                    <th className="smallTxt font-normal">{tr.senderUsername}</th>
-                    <th className="smallTxt font-normal">{tr.receiverUsername}</th>
-                    <th className="smallTxt font-normal">{tr.amount}$</th>
-                    <th className="smallTxt font-normal">{tr.description}</th>
-                    <th className="smallTxt font-normal">{dater(tr.timestamp)}</th>
-                    <th className="smallTxt font-normal">{tr.status == true ? "True" : "False"}</th>
-                  </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+            <TransactionTable/>
         </section>
       </div>
     </div>
