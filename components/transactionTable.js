@@ -13,9 +13,9 @@ function TransactionTable() {
 		async function getData(){
 			const data = await getTransactions(cookie.token);
       const userData = await getUserInfo(cookie.token);
-      setUsername(userData.user.username)
 			if(data.transactions){
-				const arr = data.transactions.sort(function(a, b) {
+        setUsername(userData.user.username)
+        const arr = data.transactions.sort(function(a, b) {
 					return - (a.id - b.id) ;
 				})
 				setTransactions(arr);
@@ -53,8 +53,8 @@ function TransactionTable() {
             <th>
               { tr.status == "0" && tr.senderUsername != username ? (
                 <div className='w-[100%] flex flex-row justify-around'>
-                  <button onClick={async () => {await acceptTransaction(cookie.token, tr.id)}}><img src='../yes.svg' width={50} alt='Accept'/></button>
-                  <button onClick={async () => {await rejectTransaction(cookie.token, tr.id)}}><img src='../no.svg' width={40} alt='reject'/></button>
+                  <button onClick={async () => {await acceptTransaction(cookie.token, tr.id); window.location.reload();}}><img src='../yes.svg' width={50} alt='Accept'/></button>
+                  <button onClick={async () => {await rejectTransaction(cookie.token, tr.id); window.location.reload();}}><img src='../no.svg' width={40} alt='reject'/></button>
                 </div>
               ) : tr.status == "0" ? "Pending" : tr.status
               }

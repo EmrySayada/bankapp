@@ -26,7 +26,7 @@ function Login() {
     }
     return (
         <div className='flex items-center w-screen h-screen bg-[#3399CC]'>
-            <div className='w-[50%] h-screen bg-white rounded-t-[20px] rounded-r-[20px] flex flex-col items-center justify-center'>
+            <div className='w-[50%] h-screen bg-white rounded-y-[20px] rounded-r-[20px] flex flex-col items-center justify-center'>
                 <h1 className='mb-[10px] text-[#3399CC] text-[32px] font-bold'>Login</h1>
                 <input type='text' placeholder='Username' className='form' onChange={(v) => {setUsername(v.target.value); setErr(null)}}/>
                 <input type='password' placeholder='Password' className='form' onChange={(v) => {setPassword(v.target.value); setErr(null)}}/>

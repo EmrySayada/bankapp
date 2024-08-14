@@ -27,7 +27,11 @@ export default function Home() {
         }else{
           if(tempData.transactionsData.transactions !== undefined){
             if (tempData.transactionsData.transactions.length){
-              setTransaction(tempData.transactionsData.transactions[tempData.transactionsData.transactions.length-1].amount);
+              for(let i = 0; i<tempData.transactionsData.transactions.length; i++){
+                if(tempData.transactionsData.transactions[i].id == tempData.transactionsData.transactions.length){
+                  setTransaction(tempData.transactionsData.transactions[i].amount);
+                }
+              }
             }else{
               setTransaction(0);
             }

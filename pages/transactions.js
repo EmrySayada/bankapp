@@ -16,6 +16,7 @@ function Transaction() {
     if(data.error){
       setErr(data.error);
     }
+    window.location.reload();
   }
   return (
     <div className='flex'>
