@@ -32,7 +32,7 @@ function Login() {
                 <input type='password' placeholder='Password' className='form' onChange={(v) => {setPassword(v.target.value); setErr(null)}}/>
                 <p className='text-red-500 mb-[10px] transition-all'>{err}</p>
                 <button className='btn transition-all' onClick={async () => {await handleLogin(username, password)}}>Login</button>
-                <p className='text-[#3399CC] mt-[20px]'>Don't have an account? <button className='underline' onClick={() => {router.push('/register')}}>Sign Up</button></p>
+                <p className='text-[#3399CC] mt-[20px]'>Don&apos;t have an account? <button className='underline' onClick={() => {router.push('/register')}}>Sign Up</button></p>
             </div>
             <div className='w-[50%] h-screen flex items-center justify-center text-center group'>
                 <h1 className='text-white text-[32px] font-bold group-hover:text-[64px] group-hover:text-[#3399CC] transition-all ease z-10'>A new way of banking.</h1>

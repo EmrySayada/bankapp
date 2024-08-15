@@ -1,4 +1,4 @@
-const URL = 'http://127.0.0.1:5000'
+const URL = 'https://bankappbackend-gq8x.onrender.com'
 
 export async function login(username, password){
     const res = await fetch(URL+'/login', {
