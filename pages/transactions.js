@@ -3,6 +3,7 @@ import { createTransaction, getInfo, getTransactions } from '@/api/apiManager'
 import { useCookies } from 'react-cookie';
 import NavBar from '@/components/nav';
 import TransactionTable from '@/components/transactionTable';
+import ActivityIndicator from '@/components/loading';
 
 function Transaction() {
   const [cookie, setCookie, removeCookie] = useCookies(['token']);
@@ -21,6 +22,7 @@ function Transaction() {
   return (
     <div className='flex'>
       <NavBar selected={'transactions'}/>
+      <ActivityIndicator/>
       <div className='w-[85%] flex justify-around flex-col h-screen'>
         <div className='flex flex-col justify-center items-center w-[100%]'>
           <input placeholder='Enter account number' type='number' onChange={(v) => {setOwnAccountId(v.target.value)}} className='form'/>

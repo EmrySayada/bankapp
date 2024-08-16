@@ -5,6 +5,7 @@ import { getInfo } from "@/api/apiManager";
 import NavBar from "@/components/nav";
 import { dater } from "@/functions/dater";
 import TransactionTable from "@/components/transactionTable";
+import ActivityIndicator from "@/components/loading";
 
 
 export default function Home() {

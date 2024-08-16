@@ -3,14 +3,17 @@ import { dater } from '@/functions/dater';
 import { acceptTransaction, getTransactions, getUserInfo, rejectTransaction } from '@/api/apiManager';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
+import ActivityIndicator from './loading';
 
 function TransactionTable() {
 	const [cookie, setCookie, removeCookie] = useCookies();
 	const [transactions, setTransactions] = useState([]);
   const [username, setUsername] = useState();
+  const [enabled, setEnabled] = useState(false);
 	const router = useRouter();
 	useEffect(() => {
 		async function getData(){
+      setEnabled(true)
 			const data = await getTransactions(cookie.token);
       const userData = await getUserInfo(cookie.token);
 			if(data.transactions){
@@ -24,6 +27,7 @@ function TransactionTable() {
 			}
 		}
 		getData();
+    setEnabled(false)
 	},[])
   return (
     <div className='w-[90%] h-[50vh] overflow-scroll bg-[#E8F8FF] rounded-[5px]'>

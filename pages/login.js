@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { login, hash } from '@/api/apiManager'
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
+import ActivityIndicator from '@/components/loading';
 
 
 function Login() {
@@ -9,23 +10,27 @@ function Login() {
     const [password, setPassword] = useState();
     const [err, setErr] = useState();
     const [cookie, setCookie, removeCookie] = useCookies(['token']);
+    const [enabled, setEnabled] = useState(false);
     const router = useRouter();
     async function handleLogin(username, password){
         if(username === undefined || password === undefined){
             setErr("You must enter a username and a password!")
             return "problem";
         }
+        setEnabled(true)
         const loginRes = await login(username, await hash(password, 2));
         if(loginRes.error){
             setErr(loginRes.error)
             return "problem";
         }
         setCookie('token', loginRes.access_token)
+        setEnabled(false)
         router.push('/')
         return "ok";
     }
     return (
         <div className='flex items-center w-screen h-screen bg-[#3399CC]'>
+            <ActivityIndicator visible={enabled}/>
             <div className='w-[50%] h-screen bg-white rounded-y-[20px] rounded-r-[20px] flex flex-col items-center justify-center'>
                 <h1 className='mb-[10px] text-[#3399CC] text-[32px] font-bold'>Login</h1>
                 <input type='text' placeholder='Username' className='form' onChange={(v) => {setUsername(v.target.value); setErr(null)}}/>
